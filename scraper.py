@@ -69,3 +69,12 @@ def merge_data(df_new, df_old):
 	df['doplacilo_diff_percent'] = df.doplacilo_diff / df.doplacilo_old * 100
 
 	return df
+
+
+if __name__ == '__main__':
+	df_new, df_old = load_data()
+	df = merge_data(df_new, df_old)
+	print(df.head())
+	print(f'{len(df)} restaurants')
+	# saves the data to a json file
+	df.to_json('data.json', orient='records')
