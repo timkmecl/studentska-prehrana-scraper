@@ -57,6 +57,15 @@ def merge_data(df_new, df_old):
 	# Merge the data
 	df = pd.merge(df_old, df_new, on=['posid'], how='outer', suffixes=('_old', '_new'))
 
+	# Fill the NaN values with the old values
+	df.lat_new = df.lat_new.fillna(df.lat_old)
+	df.lon_new = df.lon_new.fillna(df.lon_old)
+	df.lokal_new = df.lokal_new.fillna(df.lokal_old)
+	df.naslov_new = df.naslov_new.fillna(df.naslov_old)
+	df.city_new = df.city_new.fillna(df.city_old)
+	df.detailslink_new = df.detailslink_new.fillna(df.detailslink_old)
+	df['sort-group_new'] = df['sort-group_new'].fillna(df['sort-group_old'])
+
 	# Remove the columns that are not needed, rename the columns and reorder them
 	df = df.drop(['lat_old', 'lon_old', 'lokal_old', 'naslov_old', 'city_old', 'detailslink_old', 'sort-group_old'], axis=1)
 	df = df.rename(columns={'lat_new': 'lat', 'lon_new': 'lon', 'lokal_new': 'lokal', 'naslov_new': 'naslov', 'city_new': 'city', 'detailslink_new': 'detailslink', 'sort-group_new': 'sort-group', 'cena_old': 'cena_old', 'cena_new': 'cena', 'doplacilo_old': 'doplacilo_old', 'doplacilo_new': 'doplacilo'})
