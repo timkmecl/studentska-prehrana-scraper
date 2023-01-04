@@ -36,3 +36,36 @@ def extract_attrs(url):
 	df.detailslink = df.detailslink.astype('string')
 	
 	return df
+
+
+def load_data():
+	# Load the data from the website and from the archive
+	URL_NEW = 'https://www.studentska-prehrana.si/sl/restaurant'
+	URL_OLD = 'https://web.archive.org/web/20220601102110/https://www.studentska-prehrana.si/sl/restaurant'
+	df_new = extract_attrs(URL_NEW)
+	df_old = extract_attrs(URL_OLD)
+
+	return df_new, df_old
+
+
+def merge_data(df_new, df_old):
+	# Merge the data from the website and from the archive
+	# Fix the posid of two restaurants
+	df_old.loc[df_old.posid == 2829, 'posid'] = 3191
+	df_old.loc[df_old.posid == 2875, 'posid'] = 3205
+
+	# Merge the data
+	df = pd.merge(df_old, df_new, on=['posid'], how='right', suffixes=('_old', '_new'))
+
+	# Remove the columns that are not needed, rename the columns and reorder them
+	df = df.drop(['lat_old', 'lon_old', 'lokal_old', 'naslov_old', 'city_old', 'detailslink_old', 'sort-group_old'], axis=1)
+	df = df.rename(columns={'lat_new': 'lat', 'lon_new': 'lon', 'lokal_new': 'lokal', 'naslov_new': 'naslov', 'city_new': 'city', 'detailslink_new': 'detailslink', 'sort-group_new': 'sort-group', 'cena_old': 'cena_old', 'cena_new': 'cena', 'doplacilo_old': 'doplacilo_old', 'doplacilo_new': 'doplacilo'})
+	df = df[['lokal', 'naslov', 'city', 'cena', 'cena_old', 'doplacilo', 'doplacilo_old', 'lat', 'lon', 'posid', 'detailslink', 'sort-group']]
+
+	# Calculate the differences
+	df['cena_diff'] = df.cena - df.cena_old
+	df['doplacilo_diff'] = df.doplacilo - df.doplacilo_old
+	df['cena_diff_percent'] = df.cena_diff / df.cena_old * 100
+	df['doplacilo_diff_percent'] = df.doplacilo_diff / df.doplacilo_old * 100
+
+	return df
