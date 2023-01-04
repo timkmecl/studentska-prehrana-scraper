@@ -55,7 +55,7 @@ def merge_data(df_new, df_old):
 	df_old.loc[df_old.posid == 2875, 'posid'] = 3205
 
 	# Merge the data
-	df = pd.merge(df_old, df_new, on=['posid'], how='right', suffixes=('_old', '_new'))
+	df = pd.merge(df_old, df_new, on=['posid'], how='outer', suffixes=('_old', '_new'))
 
 	# Remove the columns that are not needed, rename the columns and reorder them
 	df = df.drop(['lat_old', 'lon_old', 'lokal_old', 'naslov_old', 'city_old', 'detailslink_old', 'sort-group_old'], axis=1)
@@ -77,4 +77,6 @@ if __name__ == '__main__':
 	print(df.head())
 	print(f'{len(df)} restaurants')
 	# saves the data to a json file
-	df.to_json('data.json', orient='records')
+	df.to_json('data/restavracije.json', orient='records')
+	# saves the data to a csv file
+	df.to_csv('data/restavracije.csv', index=False)
