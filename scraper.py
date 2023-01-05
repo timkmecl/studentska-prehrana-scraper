@@ -50,9 +50,14 @@ def load_data():
 
 def merge_data(df_new, df_old):
 	# Merge the data from the website and from the archive
+
 	# Fix the posid of two restaurants
 	df_old.loc[df_old.posid == 2829, 'posid'] = 3191
 	df_old.loc[df_old.posid == 2875, 'posid'] = 3205
+	# Fix wrong new price of one restaurant
+	df_new.loc[df_new.posid == 3071, 'doplacilo'] = 0.0
+	df_new.loc[df_new.posid == 3071, 'cena'] = 3.5
+
 
 	# Merge the data
 	df = pd.merge(df_old, df_new, on=['posid'], how='outer', suffixes=('_old', '_new'))
