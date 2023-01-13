@@ -54,9 +54,11 @@ def merge_data(df_new, df_old):
 	# Fix the posid of two restaurants
 	df_old.loc[df_old.posid == 2829, 'posid'] = 3191
 	df_old.loc[df_old.posid == 2875, 'posid'] = 3205
-	# Fix wrong new price of one restaurant
+	# Fix wrong new price of some restaurante
 	df_new.loc[df_new.posid == 3071, 'doplacilo'] = 0.0
 	df_new.loc[df_new.posid == 3071, 'cena'] = 3.5
+	df_new.loc[df_new.posid == 2521, 'doplacilo'] = 3.4
+	df_new.loc[df_new.posid == 2521, 'cena'] = 6.9
 
 
 	# Merge the data

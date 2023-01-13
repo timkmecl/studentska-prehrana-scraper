@@ -33,7 +33,7 @@ python scraper.py
 This will save the data to both a CSV and a JSON file in the `/data` directory.
 
 ## Plots
-### Histogram of price changes
+### Histogram of prices then and now
 ![Histogram of price changes](plots/histogram-doplacil.png)	
 
 ### Histogram of price increases
