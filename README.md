@@ -2,7 +2,7 @@
 
 Welcome to this repository, which provides a script to scrape data from [Študentska prehrana](https://www.studentska-prehrana.si/sl/restaurant), a website that lists restaurants that offer discounted meals to students in Slovenia. The script retrieves data from the Internet Archive to compare the prices of meals in June 2022 with the current prices listed on the website. The data is cleaned and merged into a single dataframe for further analysis.
 
-In addition to the script, this repository also includes a Jupyter notebook [`overview.ipynb`](overwiev.ipynb) that calculates various statistics on the data, and [`histograms.ipynb`](histograms.ipynb) that plots histograms of the price changes (see them inside folder [`plots`](plots)).
+In addition to the script, this repository also includes a Jupyter notebook [`overview.ipynb`](overview.ipynb) that calculates various statistics on the data, and [`histograms.ipynb`](histograms.ipynb) that plots histograms of the price changes (see them inside folder [`plots`](plots)).
 
 I use the data as a basis for [Boni 23](https://kmecl.tk/boni23) website (repo [here](https://github.com/timkmecl/boni23))
 

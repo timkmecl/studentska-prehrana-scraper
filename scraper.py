@@ -5,6 +5,15 @@ import pandas as pd
 
 
 def extract_attrs(url):
+	"""Extracts the attributes from the HTML of the website starting with 'data-'.
+
+	Args:
+		url (str): The URL of the website.
+
+	Returns:
+		pandas.DataFrame: The extracted attributes.
+	"""
+
 	# Get the HTML from the website
 	r = requests.get(url)
 	soup = BeautifulSoup(r.content, 'html.parser')
@@ -39,7 +48,12 @@ def extract_attrs(url):
 
 
 def load_data():
-	# Load the data from the website and from the archive
+	"""Loads the data from the website and from the archive.
+
+	Returns:
+		tuple: The data from the website and from the archive as a tuple of pandas.DataFrames.
+	"""
+
 	URL_NEW = 'https://www.studentska-prehrana.si/sl/restaurant'
 	URL_OLD = 'https://web.archive.org/web/20220601102110/https://www.studentska-prehrana.si/sl/restaurant'
 	df_new = extract_attrs(URL_NEW)
@@ -49,8 +63,16 @@ def load_data():
 
 
 def merge_data(df_new, df_old):
-	# Merge the data from the website and from the archive
+	"""Merges the data from the website and from the archive.
 
+	Args:
+		df_new (pandas.DataFrame): The data from the website.
+		df_old (pandas.DataFrame): The data from the archive.
+
+	Returns:
+		pandas.DataFrame: The merged data.
+	"""
+	
 	# Fix the posid of two restaurants
 	df_old.loc[df_old.posid == 2829, 'posid'] = 3191
 	df_old.loc[df_old.posid == 2875, 'posid'] = 3205
